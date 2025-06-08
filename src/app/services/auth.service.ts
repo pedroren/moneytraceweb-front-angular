@@ -9,4 +9,7 @@ import { environment } from '../../environments/environment';
 export class AuthService {
   private apiUrl = environment.apiUrl;
   private tokenKey = 'authToken';
+  public getToken(): string | null {
+    return localStorage.getItem(this.tokenKey);
+  }
 }

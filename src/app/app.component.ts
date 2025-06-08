@@ -20,6 +20,11 @@ export class AppComponent {
         icon: 'pi pi-fw pi-home',
         routerLink: '/'
       },
+      {
+        label: 'Vendors',
+        icon: 'pi pi-fw pi-home',
+        routerLink: '/vendors'
+      },
     ]      
   }
 }
