@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BackendApiService } from "./backend-api.service";
+import { VendorModel } from "../models/vendor-model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class VendorService {
   createVendor(vendor: any) {
     return this.apiService.post('vendors', vendor);
   }
-  updateVendor(id: string, vendor: any) {
+  updateVendor(id: string, vendor: VendorModel) {
     return this.apiService.put(`vendors/${id}`, vendor);
   }
   deleteVendor(id: string) {

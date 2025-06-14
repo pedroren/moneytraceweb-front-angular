@@ -1,0 +1,35 @@
+<p-dialog
+  header="New Vendor"
+  [modal]="true"
+  [visible]="visible()"
+  (onHide)="onClose.emit()"
+  [style]="{ width: '25rem' }"
+>
+  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
+    <div class="flex items-center gap-4 mb-4">
+      <label for="name" class="font-semibold w-24">Name</label>
+      <input id="name" type="text" pInputText formControlName="name" class="flex-auto"/>
+      @if (vendorForm.get('name')?.invalid && vendorForm.get('name')?.touched) {
+        <div class="error">Name is required.</div>
+      }
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <label for="isEnabled" class="font-semibold w-24">Active</label>
+      <p-checkbox inputId="isEnabled" formControlName="isEnabled" inputClass="flex-auto" binary="true"></p-checkbox>
+    </div>
+    <div class="flex justify-end gap-2">
+      <button
+        type="submit"
+        pButton
+        label="Save"
+        [disabled]="vendorForm.invalid"
+      ></button>
+      <button
+        type="button"
+        pButton
+        label="Cancel"
+        (click)="onClose.emit()"
+      ></button>
+    </div>
+  </form>
+</p-dialog>

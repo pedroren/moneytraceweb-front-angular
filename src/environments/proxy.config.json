@@ -1,6 +1,11 @@
 {
-  "/api/*": {
-    "target": "http://localhost:5111/",
-    "secure": false
-  }
+  "/api": {
+       "target": "http://localhost:5111/api",
+       "secure": false,
+       "logLevel": "debug",
+       "changeOrigin": true,
+       "pathRewrite": {
+         "^/api": ""
+       }
+     }
 }

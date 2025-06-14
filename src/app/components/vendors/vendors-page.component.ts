@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { VendorListComponent } from "./vendor-list.component";
 import { globalModules } from '../../global-modules';
+import { NewVendorFormComponent } from "./new-vendor-form.component";
 
 @Component({
   selector: 'app-vendors-page',
@@ -9,7 +10,9 @@ import { globalModules } from '../../global-modules';
   styleUrl: './vendors-page.component.css'
 })
 export class VendorsPageComponent {
+
   constructor() { 
     // Initialization logic can go here if needed
   }
+
 }
