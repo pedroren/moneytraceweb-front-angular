@@ -9,6 +9,7 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 export const globalModules = [
   ButtonModule,
@@ -21,4 +22,5 @@ export const globalModules = [
   ToastModule,
   IconFieldModule,
   InputIconModule,
+  SelectButtonModule,
   ReactiveFormsModule];

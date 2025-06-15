@@ -1,7 +1,7 @@
 <p-dialog
   [header]="getTitle()"
   [modal]="true"
-  [(visible)]="showModal"
+  [visible]="visible()"
   (onHide)="onClose.emit()"
   [style]="{ width: '25rem' }"
 >

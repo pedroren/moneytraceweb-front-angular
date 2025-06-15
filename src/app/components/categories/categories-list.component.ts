@@ -1,34 +1,32 @@
 import { Component, effect, input, output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { VendorModel } from '../../models/vendor-model';
 import { globalModules } from '../../global-modules';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CategoryModel } from '../../models/category-model';
 
 @Component({
-  selector: 'app-new-vendor-form',
+  selector: 'app-categories-list',
   imports: [...globalModules],
-  templateUrl: './new-vendor-form.component.html',
-  styleUrl: './new-vendor-form.component.css',
+  templateUrl: './categories-list.component.html',
+  styleUrl: './categories-list.component.css'
 })
-export class NewVendorFormComponent {
+export class CategoriesListComponent {
+recordForm: FormGroup;
+  recordModel = input<CategoryModel | null>(null);
   visible = input<boolean>(false);
   onClose = output();
-  onSave = output<VendorModel>();
-
-  recordForm: FormGroup;
-  recordModel = input<VendorModel | null>(null);
-  showModal: boolean = false;
+  onSave = output<CategoryModel>();
 
   getTitle(): string {
-    return this.recordModel()?.id ? 'Edit Vendor' : 'New Vendor';
+    return this.recordModel()?.id ? 'Edit Category' : 'New Category';
   };
 
   constructor() {
     this.recordForm = new FormGroup({
-      id: new FormControl(0),
-      name: new FormControl('', [
+      id: new FormControl(this.recordModel()?.id || 0),
+      name: new FormControl(this.recordModel()?.name || '', [
         Validators.required,
       ]),
-      isEnabled: new FormControl(true),
+      isEnabled: new FormControl(this.recordModel()?.isEnabled || true),
     });
     effect(() => {
       if (this.recordModel && this.recordModel()) {
@@ -38,7 +36,6 @@ export class NewVendorFormComponent {
           isEnabled: this.recordModel()!.isEnabled,
         });
       }
-      this.showModal = this.visible();
     });
   }
 
@@ -46,7 +43,7 @@ export class NewVendorFormComponent {
     if (this.recordForm.valid) {
       // Handle form submission logic here
       console.log('Form submitted:', this.recordForm.value);
-      this.onSave.emit(this.recordForm.value as VendorModel);
+      this.onSave.emit(this.recordForm.value as CategoryModel);
     } else {
       console.log('Form is invalid');
     }

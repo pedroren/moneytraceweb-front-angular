@@ -14,8 +14,18 @@
       }
     </div>
     <div class="flex items-center gap-4 mb-4">
+      <label for="description" class="font-semibold w-24">Description</label>
+      <input id="description" type="text" pInputText formControlName="description" class="flex-auto"/>
+      @if (recordForm.get('description')?.invalid && recordForm.get('description')?.touched) {
+        <div class="error">*</div>
+      }
+    </div>
+    <div class="flex items-center gap-4 mb-4">
       <label for="isEnabled" class="font-semibold w-24">Active</label>
       <p-checkbox inputId="isEnabled" formControlName="isEnabled" inputClass="flex-auto" binary="true"></p-checkbox>
+    </div>
+    <div class="flex items-center gap-4 mb-4">
+      <p-selectbutton [options]="accountTypes" formControlName="type" aria-labelledby="basic"  />
     </div>
     <div class="flex justify-end gap-2">
       <button

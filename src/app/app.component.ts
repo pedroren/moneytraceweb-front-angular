@@ -25,6 +25,16 @@ export class AppComponent {
         icon: 'pi pi-fw pi-table',
         routerLink: '/vendors'
       },
+      {
+        label: 'Accounts',
+        icon: 'pi pi-fw pi-table',
+        routerLink: '/accounts'
+      },
+      {
+        label: 'Categories',
+        icon: 'pi pi-fw pi-table',
+        routerLink: '/categories'
+      },
     ]      
   }
 }

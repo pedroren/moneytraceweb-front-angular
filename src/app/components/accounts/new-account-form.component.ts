@@ -1,31 +1,36 @@
 import { Component, effect, input, output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { VendorModel } from '../../models/vendor-model';
 import { globalModules } from '../../global-modules';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AccountModel, AccountType } from '../../models/account-model';
 
 @Component({
-  selector: 'app-new-vendor-form',
+  selector: 'app-new-account-form',
   imports: [...globalModules],
-  templateUrl: './new-vendor-form.component.html',
-  styleUrl: './new-vendor-form.component.css',
+  templateUrl: './new-account-form.component.html',
+  styleUrl: './new-account-form.component.css'
 })
-export class NewVendorFormComponent {
+export class NewAccountFormComponent {
+recordForm: FormGroup;
+  recordModel = input<AccountModel | null>(null);
   visible = input<boolean>(false);
   onClose = output();
-  onSave = output<VendorModel>();
+  onSave = output<AccountModel>();
 
-  recordForm: FormGroup;
-  recordModel = input<VendorModel | null>(null);
   showModal: boolean = false;
+  accountTypes: string[] = Object.values(AccountType);
 
   getTitle(): string {
-    return this.recordModel()?.id ? 'Edit Vendor' : 'New Vendor';
+    return this.recordModel()?.id ? 'Edit Account' : 'New Account';
   };
 
   constructor() {
     this.recordForm = new FormGroup({
       id: new FormControl(0),
       name: new FormControl('', [
+        Validators.required,
+      ]),
+      description: new FormControl(''),
+      type: new FormControl(AccountType.Credit, [
         Validators.required,
       ]),
       isEnabled: new FormControl(true),
@@ -35,6 +40,7 @@ export class NewVendorFormComponent {
         this.recordForm.patchValue({
           id: this.recordModel()!.id,
           name: this.recordModel()!.name,
+          description: this.recordModel()!.description,
           isEnabled: this.recordModel()!.isEnabled,
         });
       }
@@ -46,7 +52,7 @@ export class NewVendorFormComponent {
     if (this.recordForm.valid) {
       // Handle form submission logic here
       console.log('Form submitted:', this.recordForm.value);
-      this.onSave.emit(this.recordForm.value as VendorModel);
+      this.onSave.emit(this.recordForm.value as AccountModel);
     } else {
       console.log('Form is invalid');
     }

@@ -3,7 +3,7 @@
 [globalFilterFields]="['name']">
     <ng-template #caption>
         <div class="flex">
-            <p-button label="New Vendor" icon="pi pi-file-plus" (onClick)="onNewRecord()" />
+            <p-button label="New Account" icon="pi pi-file-plus" (onClick)="onNewRecord()" />
             <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
                     <i class="pi pi-search"></i>
@@ -16,6 +16,8 @@
     <tr>
       <th>Id</th>
       <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th pSortableColumn="description">Description <p-sortIcon field="description" /></th>
+      <th pSortableColumn="type">Type <p-sortIcon field="type" /></th>
       <th pSortableColumn="isEnabled">
         Active <p-sortIcon field="isEnabled" />
       </th>
@@ -26,7 +28,9 @@
     <tr>
       <td>{{ record.id }}</td>
       <td>{{ record.name }}</td>
-      <td>{{ record.isEnabled | booleanCell}}</td>
+      <td>{{ record.description }}</td>
+      <td>{{ record.type }}</td>
+      <td>{{ record.isEnabled | booleanCell }}</td>
       <td>
         <p-buttongroup>
           <p-button
@@ -44,11 +48,11 @@
     </tr>
   </ng-template>
 </p-table>
-<app-new-vendor-form
+<app-new-account-form
   [visible]="showNewEditDialog"
   (onClose)="onDialogClose()"
   (onSave)="onRecordSave($event)"
   [recordModel]="selectedRecord"
-></app-new-vendor-form>
+></app-new-account-form>
 <p-toast />
 <p-confirmdialog />
