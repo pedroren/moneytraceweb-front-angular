@@ -10,40 +10,40 @@ import { globalModules } from '../../global-modules';
   styleUrl: './new-vendor-form.component.css',
 })
 export class NewVendorFormComponent {
-  vendorForm: FormGroup;
-  vendorModel = input<VendorModel | null>(null);
+  recordForm: FormGroup;
+  recordModel = input<VendorModel | null>(null);
   visible = input<boolean>(false);
   onClose = output();
   onSave = output<VendorModel>();
 
   getTitle(): string {
-    return this.vendorModel()?.id ? 'Edit Vendor' : 'New Vendor';
+    return this.recordModel()?.id ? 'Edit Vendor' : 'New Vendor';
   };
 
   constructor() {
-    this.vendorForm = new FormGroup({
-      id: new FormControl(this.vendorModel()?.id || 0),
-      name: new FormControl(this.vendorModel()?.name || '', [
+    this.recordForm = new FormGroup({
+      id: new FormControl(this.recordModel()?.id || 0),
+      name: new FormControl(this.recordModel()?.name || '', [
         Validators.required,
       ]),
-      isEnabled: new FormControl(this.vendorModel()?.isEnabled || true),
+      isEnabled: new FormControl(this.recordModel()?.isEnabled || true),
     });
     effect(() => {
-      if (this.vendorModel && this.vendorModel()) {
-        this.vendorForm.patchValue({
-          id: this.vendorModel()!.id,
-          name: this.vendorModel()!.name,
-          isEnabled: this.vendorModel()!.isEnabled,
+      if (this.recordModel && this.recordModel()) {
+        this.recordForm.patchValue({
+          id: this.recordModel()!.id,
+          name: this.recordModel()!.name,
+          isEnabled: this.recordModel()!.isEnabled,
         });
       }
     });
   }
 
   onSubmit() {
-    if (this.vendorForm.valid) {
+    if (this.recordForm.valid) {
       // Handle form submission logic here
-      console.log('Form submitted:', this.vendorForm.value);
-      this.onSave.emit(this.vendorForm.value as VendorModel);
+      console.log('Form submitted:', this.recordForm.value);
+      this.onSave.emit(this.recordForm.value as VendorModel);
     } else {
       console.log('Form is invalid');
     }

@@ -13,20 +13,20 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [ConfirmationService, MessageService]
 })
 export class VendorListComponent {
-  constructor(private vendorService: VendorService, 
+  constructor(private entityService: VendorService, 
     private confirmationService: ConfirmationService, 
     private messageService: MessageService ) { }
-  vendors: any[] = [];
-  selectedVendor: VendorModel | null = null;
-  showVendorDialog = false;
+  records: any[] = [];
+  selectedRecord: VendorModel | null = null;
+  showNewEditDialog = false;
 
   ngOnInit() {
-    this.loadVendors();
+    this.loadRecords();
   }
-  loadVendors() {
-    this.vendorService.getVendors().subscribe({
+  loadRecords() {
+    this.entityService.getVendors().subscribe({
       next: (data) => {
-        this.vendors = data as any[];
+        this.records = data as any[];
       },
       error: (err) => {
         console.error('Error loading vendors', err);
@@ -34,21 +34,19 @@ export class VendorListComponent {
     });
   }
   onDialogClose() {
-    this.showVendorDialog = false;
-    this.selectedVendor = null; // Reset selected vendor
+    this.showNewEditDialog = false;
+    this.selectedRecord = null; // Reset selected vendor
   }
-  onNewVendor(){
-    console.log('New vendor button clicked');
-    this.selectedVendor = new VendorModel(0, "", true); // Reset selected vendor for new vendor
-    this.showVendorDialog = true; // Show the form for creating a new vendor
+  onNewRecord(){
+    this.selectedRecord = {id: 0, name: '', isEnabled: true} // Reset selected vendor for new vendor
+    this.showNewEditDialog = true; // Show the form for creating a new vendor
   }
-  onEditVendor(vendor: VendorModel){
-    console.log('Edit vendor:', vendor);
-    this.selectedVendor = vendor;
-    this.showVendorDialog = true;
+  onEditRecord(record: VendorModel){
+    console.log('Edit vendor:', record);
+    this.selectedRecord = record;
+    this.showNewEditDialog = true;
   }
-  onDeleteVendor(event: Event, vendor: VendorModel) {
-    console.log('Delete vendor:', vendor);
+  onDeleteRecord(event: Event, record: VendorModel) {
     this.confirmationService.confirm({
             target: event.target as EventTarget,
             message: 'Do you want to delete this record?',
@@ -66,7 +64,7 @@ export class VendorListComponent {
             },
 
             accept: () => {
-              this.deleteVendor(vendor.id.toString());                
+              this.deleteRecord(record.id.toString());                
             },
             reject: () => {
                 this.messageService.add({ severity: 'warning', summary: 'Rejected', detail: 'You have rejected' });
@@ -74,25 +72,24 @@ export class VendorListComponent {
         });
 
   }
-  deleteVendor(id: string) {
-    this.vendorService.deleteVendor(id).subscribe({
+  deleteRecord(id: string) {
+    this.entityService.deleteVendor(id).subscribe({
       next: () => {
         this.messageService.add({ severity: 'info', summary: 'Confirmed', detail: 'Record deleted' });
-        this.loadVendors(); // Refresh the list after deletion
+        this.loadRecords(); // Refresh the list after deletion
       },
       error: (err) => {
         console.error('Error deleting vendor', err);
       }
     });
   }
-  onVendorSave(vendor: VendorModel) {
+  onRecordSave(vendor: VendorModel) {
     if (vendor.id){
-      console.log('Vendor update received:', vendor);
-      // Update existing vendor
-      this.vendorService.updateVendor(vendor.id.toString(), vendor).subscribe({
+      // Update existing
+      this.entityService.updateVendor(vendor.id.toString(), vendor).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor updated successfully' });
-          this.loadVendors(); // Refresh the list after update
+          this.loadRecords(); // Refresh the list after update
         },
         error: (err) => {
           console.error('Error updating vendor', err);
@@ -100,12 +97,11 @@ export class VendorListComponent {
       });
     }
     else {
-      console.log('New vendor received:', vendor);
-      // Create new vendor
-      this.vendorService.createVendor(vendor).subscribe({
+      // Create new
+      this.entityService.createVendor(vendor).subscribe({
         next: () => {
           this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Vendor created successfully' });
-          this.loadVendors(); // Refresh the list after creation
+          this.loadRecords(); // Refresh the list after creation
         },
         error: (err) => {
           console.error('Error creating vendor', err);
@@ -113,7 +109,7 @@ export class VendorListComponent {
       });
     }
     
-    this.showVendorDialog = false;
+    this.showNewEditDialog = false;
   }
   
 }

@@ -1,9 +1,9 @@
 
-<p-table #datatable [value]="vendors" [tableStyle]="{ 'min-width': '50rem' }"
+<p-table #datatable [value]="records" [tableStyle]="{ 'min-width': '50rem' }"
 [globalFilterFields]="['name']">
     <ng-template #caption>
         <div class="flex">
-            <p-button label="New Vendor" icon="pi pi-file-plus" (onClick)="onNewVendor()" />
+            <p-button label="New Vendor" icon="pi pi-file-plus" (onClick)="onNewRecord()" />
             <p-iconfield iconPosition="left" class="ml-auto">
                 <p-inputicon>
                     <i class="pi pi-search"></i>
@@ -32,12 +32,12 @@
           <p-button
             icon="pi pi-pen-to-square"
             aria-label="Edit"
-            (onClick)="onEditVendor(vendor)"
+            (onClick)="onEditRecord(vendor)"
           />
           <p-button
             icon="pi pi-trash"
             aria-label="Delete"
-            (onClick)="onDeleteVendor($event, vendor)"
+            (onClick)="onDeleteRecord($event, vendor)"
           />
         </p-buttongroup>
       </td>
@@ -45,10 +45,10 @@
   </ng-template>
 </p-table>
 <app-new-vendor-form
-  [visible]="showVendorDialog"
+  [visible]="showNewEditDialog"
   (onClose)="onDialogClose()"
-  (onSave)="onVendorSave($event)"
-  [vendorModel]="selectedVendor"
+  (onSave)="onRecordSave($event)"
+  [recordModel]="selectedRecord"
 ></app-new-vendor-form>
 <p-toast />
 <p-confirmdialog />

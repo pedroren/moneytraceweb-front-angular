@@ -5,11 +5,11 @@
   (onHide)="onClose.emit()"
   [style]="{ width: '25rem' }"
 >
-  <form [formGroup]="vendorForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
     <div class="flex items-center gap-4 mb-4">
       <label for="name" class="font-semibold w-24">Name</label>
       <input id="name" type="text" pInputText formControlName="name" class="flex-auto"/>
-      @if (vendorForm.get('name')?.invalid && vendorForm.get('name')?.touched) {
+      @if (recordForm.get('name')?.invalid && recordForm.get('name')?.touched) {
         <div class="error">*</div>
       }
     </div>
@@ -22,7 +22,7 @@
         type="submit"
         pButton
         label="Save"
-        [disabled]="vendorForm.invalid"
+        [disabled]="recordForm.invalid"
       ></button>
       <button
         type="button"
