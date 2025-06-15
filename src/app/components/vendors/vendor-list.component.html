@@ -1,36 +1,54 @@
-<p>vendor-list</p>
-  <p-button
-    label="New Vendor"
-    icon="pi pi-file-plus"
-    (onClick)="onNewVendor()"
-  />
-<p-table [value]="vendors" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template #header>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Active</th>
-            <th>Actions</th>
-        </tr>
+
+<p-table #datatable [value]="vendors" [tableStyle]="{ 'min-width': '50rem' }"
+[globalFilterFields]="['name']">
+    <ng-template #caption>
+        <div class="flex">
+            <p-button label="New Vendor" icon="pi pi-file-plus" (onClick)="onNewVendor()" />
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" (input)="datatable.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+            </p-iconfield>
+        </div>
     </ng-template>
-    <ng-template #body let-vendor>
-        <tr>
-            <td>{{ vendor.id }}</td>
-            <td>{{ vendor.name }}</td>
-            <td>{{ vendor.isEnabled }}</td>
-            <td><p-buttongroup>
-                <p-button icon="pi pi-pen-to-square" aria-label="Edit" (onClick)="onEditVendor(vendor)" />
-                <p-button icon="pi pi-trash" aria-label="Delete" (onClick)="onDeleteVendor($event, vendor)"/>
-            </p-buttongroup>
-            </td>
-        </tr>
-    </ng-template>
+  <ng-template #header>
+    <tr>
+      <th>Id</th>
+      <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th pSortableColumn="isEnabled">
+        Active <p-sortIcon field="isEnabled" />
+      </th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-vendor>
+    <tr>
+      <td>{{ vendor.id }}</td>
+      <td>{{ vendor.name }}</td>
+      <td>{{ vendor.isEnabled }}</td>
+      <td>
+        <p-buttongroup>
+          <p-button
+            icon="pi pi-pen-to-square"
+            aria-label="Edit"
+            (onClick)="onEditVendor(vendor)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            aria-label="Delete"
+            (onClick)="onDeleteVendor($event, vendor)"
+          />
+        </p-buttongroup>
+      </td>
+    </tr>
+  </ng-template>
 </p-table>
 <app-new-vendor-form
-    [visible]="showVendorDialog"
-    (onClose)="onDialogClose()"
-    (onSave)="onVendorSave($event)"
-    [vendorModel]="selectedVendor"
-  ></app-new-vendor-form>
-  <p-toast />
-  <p-confirmdialog />
+  [visible]="showVendorDialog"
+  (onClose)="onDialogClose()"
+  (onSave)="onVendorSave($event)"
+  [vendorModel]="selectedVendor"
+></app-new-vendor-form>
+<p-toast />
+<p-confirmdialog />

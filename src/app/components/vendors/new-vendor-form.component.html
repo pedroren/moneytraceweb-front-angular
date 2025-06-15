@@ -1,5 +1,5 @@
 <p-dialog
-  header="New Vendor"
+  [header]="getTitle()"
   [modal]="true"
   [visible]="visible()"
   (onHide)="onClose.emit()"
@@ -10,7 +10,7 @@
       <label for="name" class="font-semibold w-24">Name</label>
       <input id="name" type="text" pInputText formControlName="name" class="flex-auto"/>
       @if (vendorForm.get('name')?.invalid && vendorForm.get('name')?.touched) {
-        <div class="error">Name is required.</div>
+        <div class="error">*</div>
       }
     </div>
     <div class="flex items-center gap-4 mb-4">

@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { VendorListComponent } from "./vendor-list.component";
 import { globalModules } from '../../global-modules';
-import { NewVendorFormComponent } from "./new-vendor-form.component";
-
 @Component({
   selector: 'app-vendors-page',
   imports: [...globalModules, VendorListComponent],

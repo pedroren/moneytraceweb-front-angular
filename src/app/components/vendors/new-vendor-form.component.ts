@@ -16,6 +16,10 @@ export class NewVendorFormComponent {
   onClose = output();
   onSave = output<VendorModel>();
 
+  getTitle(): string {
+    return this.vendorModel()?.id ? 'Edit Vendor' : 'New Vendor';
+  };
+
   constructor() {
     this.vendorForm = new FormGroup({
       id: new FormControl(this.vendorModel()?.id || 0),

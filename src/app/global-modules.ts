@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 export const globalModules = [
   ButtonModule,
@@ -17,4 +19,6 @@ export const globalModules = [
   InputTextModule,
   ConfirmDialogModule,
   ToastModule,
+  IconFieldModule,
+  InputIconModule,
   ReactiveFormsModule];
