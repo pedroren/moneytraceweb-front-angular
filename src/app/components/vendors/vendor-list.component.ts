@@ -17,7 +17,7 @@ export class VendorListComponent {
   constructor(private entityService: VendorService, 
     private confirmationService: ConfirmationService, 
     private messageService: MessageService ) { }
-  records: any[] = [];
+  records: VendorModel[] = [];
   selectedRecord: VendorModel | null = null;
   showNewEditDialog = false;
 
@@ -27,7 +27,7 @@ export class VendorListComponent {
   loadRecords() {
     this.entityService.getVendors().subscribe({
       next: (data) => {
-        this.records = data as any[];
+        this.records = data as VendorModel[];
       },
       error: (err) => {
         console.error('Error loading vendors', err);

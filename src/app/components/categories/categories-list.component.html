@@ -1,35 +1,58 @@
-<p-dialog
-  [header]="getTitle()"
-  [modal]="true"
-  [visible]="visible()"
-  (onHide)="onClose.emit()"
-  [style]="{ width: '25rem' }"
->
-  <form [formGroup]="recordForm" (ngSubmit)="onSubmit()">
-    <div class="flex items-center gap-4 mb-4">
-      <label for="name" class="font-semibold w-24">Name</label>
-      <input id="name" type="text" pInputText formControlName="name" class="flex-auto"/>
-      @if (recordForm.get('name')?.invalid && recordForm.get('name')?.touched) {
-        <div class="error">*</div>
-      }
-    </div>
-    <div class="flex items-center gap-4 mb-4">
-      <label for="isEnabled" class="font-semibold w-24">Active</label>
-      <p-checkbox inputId="isEnabled" formControlName="isEnabled" inputClass="flex-auto" binary="true"></p-checkbox>
-    </div>
-    <div class="flex justify-end gap-2">
-      <button
-        type="submit"
-        pButton
-        label="Save"
-        [disabled]="recordForm.invalid"
-      ></button>
-      <button
-        type="button"
-        pButton
-        label="Cancel"
-        (click)="onClose.emit()"
-      ></button>
-    </div>
-  </form>
-</p-dialog>
+
+<p-table #datatable [value]="records" [tableStyle]="{ 'min-width': '50rem' }"
+[globalFilterFields]="['name']">
+    <ng-template #caption>
+        <div class="flex">
+            <p-button label="New Category" icon="pi pi-file-plus" (onClick)="onNewRecord()" />
+            <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                    <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input pInputText type="text" (input)="datatable.filterGlobal($any($event.target).value, 'contains')" placeholder="Search keyword" />
+            </p-iconfield>
+        </div>
+    </ng-template>
+  <ng-template #header>
+    <tr>
+      <th>Id</th>
+      <th pSortableColumn="name">Name <p-sortIcon field="name" /></th>
+      <th pSortableColumn="type">Type <p-sortIcon field="type" /></th>
+      <th>Sub-Categories</th>
+      <th pSortableColumn="isEnabled">
+        Active <p-sortIcon field="isEnabled" />
+      </th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+  <ng-template #body let-record>
+    <tr>
+      <td>{{ record.id }}</td>
+      <td>{{ record.name }}</td>
+      <td>{{ record.type }}</td>
+      <td>{{ record.subCategories }}</td>
+      <td>{{ record.isEnabled | booleanCell }}</td>
+      <td>
+        <p-buttongroup>
+          <p-button
+            icon="pi pi-pen-to-square"
+            aria-label="Edit"
+            (onClick)="onEditRecord(record)"
+          />
+          <p-button
+            icon="pi pi-trash"
+            aria-label="Delete"
+            (onClick)="onDeleteRecord($event, record)"
+          />
+        </p-buttongroup>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+<app-new-cat-form
+  [visible]="showNewEditDialog"
+  (onClose)="onDialogClose()"
+  (onSave)="onRecordSave($event)"
+  [recordModel]="selectedRecord"
+></app-new-cat-form>
+<p-toast />
+<p-confirmdialog />

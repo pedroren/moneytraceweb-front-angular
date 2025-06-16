@@ -10,7 +10,7 @@ import { AccountModel, AccountType } from '../../models/account-model';
   styleUrl: './new-account-form.component.css'
 })
 export class NewAccountFormComponent {
-recordForm: FormGroup;
+  recordForm: FormGroup;
   recordModel = input<AccountModel | null>(null);
   visible = input<boolean>(false);
   onClose = output();
@@ -41,6 +41,7 @@ recordForm: FormGroup;
           id: this.recordModel()!.id,
           name: this.recordModel()!.name,
           description: this.recordModel()!.description,
+          type: this.recordModel()!.type,
           isEnabled: this.recordModel()!.isEnabled,
         });
       }

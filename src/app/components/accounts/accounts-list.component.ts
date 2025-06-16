@@ -17,7 +17,7 @@ export class AccountsListComponent {
   constructor(private entityService: AccountService, 
     private confirmationService: ConfirmationService, 
     private messageService: MessageService ) { }
-  records: any[] = [];
+  records: AccountModel[] = [];
   selectedRecord: AccountModel | null = null;
   showNewEditDialog = false;
 
@@ -27,7 +27,7 @@ export class AccountsListComponent {
   loadRecords() {
     this.entityService.getAccounts().subscribe({
       next: (data) => {
-        this.records = data as any[];
+        this.records = data as AccountModel[];
       },
       error: (err) => {
         console.error('Error loading vendors', err);
